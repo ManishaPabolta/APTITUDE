@@ -100,6 +100,7 @@ The server stores randomized question/option snapshots, persists answers, enforc
 
 ## Deployment notes
 
+- For Render, use the included `render.yaml` Blueprint to configure the backend web service. It sets `backend` as the root directory, installs `requirements.txt`, starts `app.main:app` with the platform-provided port, and uses `/api/health` for health checks. Add the environment values in Render's dashboard; never commit `backend/.env`. Set `CORS_ORIGINS` to the exact deployed frontend origin, and set `VITE_API_URL` in the frontend hosting environment to the deployed API base URL ending in `/api`.
 - Use HTTPS, a managed MongoDB deployment with authentication/network controls, a unique secret manager-backed JWT key, and strong administrator credentials.
 - Configure exact trusted origins in `CORS_ORIGINS`; do not use wildcard origins with credentials.
 - Put the API behind a TLS-terminating reverse proxy and apply platform-level rate limiting and monitoring.

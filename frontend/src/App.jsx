@@ -67,7 +67,11 @@ function AuthScreen({ onAuthenticated }) {
         : await registerStudent(form);
       onAuthenticated(data);
     } catch (err) {
-      setError(messageFromError(err));
+      setError(
+        err?.code === "ECONNABORTED" || err?.code === "ETIMEDOUT"
+          ? "The server is taking longer than usual to respond. Please wait a moment and try again."
+          : messageFromError(err),
+      );
     } finally {
       setBusy(false);
     }
